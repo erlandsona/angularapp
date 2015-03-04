@@ -1,4 +1,4 @@
-button, #submitButton {
+/*.btn {
   padding: 5px 15px;
   font-size: 20px;
   border-radius: 8px;
@@ -7,10 +7,10 @@ button, #submitButton {
   color: Grey;
 }
 
-button:hover {
+.btn:hover {
   background-color: Gainsboro;
   color: white;
-}
+}*/
 
 input {
   margin: 10px;

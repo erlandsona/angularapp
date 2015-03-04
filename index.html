@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Title</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
@@ -14,19 +15,25 @@
 
     <div class="container" ng-controller="TasController as tas">
       <h1>My TAddress Book</h1>
-      <form name="tas.newTA" ng-submit="tas.addTA()">
-        <label>First:<label>
-        <input ng-model="tas.newTA.firstName" required>
-        <label>Last:<label>
-        <input ng-model="tas.newTA.lastName" required>
-        <label>Current:<label>
-        <input type="checkbox" ng-model="tas.newTA.current">
-        <input type="submit" value="Save">
+      <form name="tas.newTA" ng-submit="tas.addTA()" novalidate>
+        <div class="form-group" ng-class="{'has-error': tas.newTA.$dirty}">
+          <label class="control-label">First:</label>
+          <input class="form-control" ng-model="tas.newTA.firstName" required>
+        </div>
+        <div class="form-group" ng-class="{'has-error': tas.newTA.$dirty}">
+          <label class="control-label">Last:</label>
+          <input class="form-control" ng-model="tas.newTA.lastName" required>
+        </div>
+        <div ng-class="{'has-error': tas.newTA.$dirty}">
+          <div class="checkbox">
+            <input type="checkbox" name="Current" value="Current" ng-model="tas.newTA.current"> Current
+          </div>
+        </div>
+        <select class="form-control" ng-model="tas.newTA.cohort">
+          <option ng-selected="key===2" ng-repeat="(key, val) in tas.cohortOptions" value={{key}}>{{val}}</option>
+        </select>
+        <input class="btn btn-success" ng-show="tas.newTA.$valid" type="submit" value="Save">
       </form>
-      <br>
-      Sort:
-      <button ng-click="friendReverse=!friendReverse">Change Sort</button>
-      <br>
       <table>
         <thead>
           <tr>
@@ -35,6 +42,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Current</th>
+            <th>Cohort</th>
             <th>Remove</th>
           </tr>
         </thead>
@@ -46,15 +54,18 @@
             <td>{{person.nickName | uppercase}}</td>
             <td>{{person.firstName}}</td>
             <td>{{person.lastName}}</td>
-            <td><input type="checkbox" ng-checked={{person.current}}></td>
+            <td>{{person.cohort}}</td>
+            <td><input type="checkbox" disabled ng-checked={{person.current}}></td>
             <td>
-              <button ng-click="tas.removeTA(person)">X</button>
+              <input class="btn" type="button" ng-click="tas.removeTA(person)" value="X">
             </td>
           </tr>
         </tbody>
       </table>
       Search: <input ng-model="friendFilterQuery">
       <br>
+      Sort:
+      <input class="btn" type="button" ng-click="friendReverse=!friendReverse" value="Change Sort">
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
