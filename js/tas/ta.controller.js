@@ -16,7 +16,6 @@ function TasController($location, taFactory, COHORT_OPTIONS) {
     vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
     taFactory.create(vm.newTA, function (res) {
-      vm.data[res.name] = vm.newTA;
       $location.path('/tas');
     });
   };
